@@ -1,4 +1,4 @@
-# Panoptic Segmentation of Satellite Image Time Series with Convolutional Temporal Attention Networks
+# Panoptic Segmentation of Satellite Image Time Series with Convolutional Temporal Attention Networks (ICCV 2021)
 
 ![](gfx/predictions.png)
 
