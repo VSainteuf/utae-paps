@@ -22,15 +22,19 @@ This repository contains the following PyTorch code:
 
 Our model achieves the following performance on :
 
-### PASTIS - Panoptic Segmentation
+### PASTIS - Panoptic segmentation
+
+Our spatio-temporal encoder U-TAE combined with our PaPs instance segmentation module achieves 40.4 Panoptic Quality (PQ) on PASTIS for panoptic segmentation.
+When replacing U-TAE with a convolutional LSTM the performance drops to 33.4 PQ.
 
 | Model name         | SQ  | RQ | PQ|
 | ------------------ |--- | --- |--- |
 | **U-TAE + PaPs** (ours)      | **81.3**|**49.2** |**40.4**|
 | UConvLSTM+PaPs  | 80.9|   40.8   |  33.4|
 
-### PASTIS - Semantic Segmentation
-
+### PASTIS - Semantic segmentation
+Our spatio-temporal encoder U-TAE yields a semantic segmentation score of 63.1 mIoU on PASTIS, achieving an improvement of approximately 5 points compared to the best existing methods that we re-implemented (Unet-3d, Unet+ConvLSTM and Feature Pyramid+Unet).
+See the paper for more details.
 
 | Model name         | #Params| OA  |  mIoU |
 | ------------------ |---- |---- | ---|
@@ -103,7 +107,7 @@ python train_panoptic.py --dataset_folder PATH_TO_DATASET --res_dir OUT_DIR_UCon
 python train_panoptic.py --dataset_folder PATH_TO_DATASET --res_dir OUT_DIR_shape24 --shape_size 24
 ```
 
-Note: By default this script runs the 5 folds of the cross validation, which can be quite long. 
+Note: By default this script runs the 5 folds of the cross validation, which can be quite long (~12 hours per fold on a Tesla V100). 
 Use the fold argument to execute one of the 5 folds only 
 (e.g. for the 3rd fold : `python train_panoptic.py --fold 3 --dataset_folder PATH_TO_DATASET --res_dir OUT_DIR`).
 
@@ -136,7 +140,19 @@ python train_semantic.py --dataset_folder PATH_TO_DATASET --res_dir OUT_DIR_Sing
 
 ```
 
+### Reference
 
+Please include a citation to the following paper if you use the U-TAE, PaPs or the PASTIS benchmark.
+
+```
+@article{garnot2021panoptic,
+  title={Panoptic Segmentation of Satellite Image Time Series with Convolutional Temporal Attention Networks},
+  author={Sainte Fare Garnot, Vivien  and Landrieu, Loic },
+  journal={ICCV},
+  year={2021}
+}
+
+```
 
 ### Credits
  
