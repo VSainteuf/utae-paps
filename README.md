@@ -5,7 +5,9 @@
 This repository is the official implementation of [Panoptic Segmentation of Satellite Image Time Series with Convolutional Temporal Attention Networks
 ](https://arxiv.org/abs/2107.07933). 
 
+[![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/panoptic-segmentation-of-satellite-image-time/semantic-segmentation-on-pastis)](https://paperswithcode.com/sota/semantic-segmentation-on-pastis?p=panoptic-segmentation-of-satellite-image-time)
 
+[![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/panoptic-segmentation-of-satellite-image-time/panoptic-segmentation-on-pastis)](https://paperswithcode.com/sota/panoptic-segmentation-on-pastis?p=panoptic-segmentation-of-satellite-image-time)
 
 ## Contents
 This repository contains the following PyTorch code:
