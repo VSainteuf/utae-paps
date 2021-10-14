@@ -53,6 +53,7 @@ parser.add_argument(
     help="Interval in batches between display of training metrics",
 )
 
+
 def main(config):
     np.random.seed(config.rdm_seed)
     torch.manual_seed(config.rdm_seed)
@@ -133,7 +134,7 @@ if __name__ == "__main__":
     with open(os.path.join(test_config.weight_folder, "conf.json")) as file:
         model_config = json.loads(file.read())
 
-    config = {**vars(test_config), **model_config}
+    config = {**model_config, **vars(test_config)}
     config = argparse.Namespace(**config)
     config.fold = test_config.fold
 
