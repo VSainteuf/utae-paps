@@ -151,7 +151,7 @@ if __name__ == "__main__":
     with open(os.path.join(test_config.weight_folder, "conf.json")) as file:
         model_config = json.loads(file.read())
 
-    config = {**vars(test_config), **model_config}
+    config = {**model_config, **vars(test_config)}
     config = argparse.Namespace(**config)
     config.fold = test_config.fold
 
