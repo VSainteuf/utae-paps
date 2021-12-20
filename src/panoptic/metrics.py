@@ -123,7 +123,7 @@ class PanopticMeter:
 
             self.counts[i] += torch.tensor([TP, FP, FN])
             if len(ious) > 0:
-                self.cumulative_ious[i] += torch.stack(ious).sum()
+                self.cumulative_ious[i] += torch.stack(ious).sum().to(device='cpu')
 
     def value(self, per_class=False):
         TP, FP, FN = self.counts.float().chunk(3, dim=-1)
