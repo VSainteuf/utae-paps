@@ -16,7 +16,7 @@ import torch.utils.data as data
 from src import utils, model_utils
 from src.dataset import PASTIS_Dataset
 
-from train_semantic import iterate, overall_performance, save_results
+from train_semantic import iterate, overall_performance, save_results, prepare_output
 
 parser = argparse.ArgumentParser()
 # Model parameters
@@ -31,6 +31,12 @@ parser.add_argument(
     default="",
     type=str,
     help="Path to the folder where the results are saved.",
+)
+parser.add_argument(
+    "--res_dir",
+    default="./inference_utae",
+    type=str,
+    help="Path to directory where results are written."
 )
 parser.add_argument(
     "--num_workers", default=8, type=int, help="Number of data loading workers"
@@ -66,6 +72,7 @@ def main(config):
     np.random.seed(config.rdm_seed)
     torch.manual_seed(config.rdm_seed)
     device = torch.device(config.device)
+    prepare_output(config)
 
     model = model_utils.get_model(config, mode="semantic")
     model = model.to(device)
@@ -114,13 +121,6 @@ def main(config):
 
         # Inference
         print("Testing . . .")
-        model.load_state_dict(
-            torch.load(
-                os.path.join(
-                    config.res_dir, "Fold_{}".format(fold + 1), "model.pth.tar"
-                )
-            )["state_dict"]
-        )
         model.eval()
         test_metrics, conf_mat = iterate(
             model,
