@@ -52,13 +52,17 @@ class PanopticMeter:
             for batch_idx, void_mask in enumerate(void_masks):
                 if void_mask.any():
                     for void_inst_id, void_inst_area in zip(
-                        *torch.unique(void_mask, return_counts=True)
+                        *torch.unique(instance_true[batch_idx]*void_mask, return_counts=True)
                     ):
+                        if void_inst_id == 0:
+                            continue
                         for pred_inst_id, pred_inst_area in zip(
                             *torch.unique(instance_pred[batch_idx], return_counts=True)
                         ):
+                            if pred_inst_id == 0:
+                                continue
                             inter = (
-                                (void_mask == void_inst_id)
+                                (instance_true[batch_idx] == void_inst_id)
                                 * (instance_pred[batch_idx] == pred_inst_id)
                             ).sum()
                             iou = (
@@ -66,6 +70,7 @@ class PanopticMeter:
                                 / (void_inst_area + pred_inst_area - inter).float()
                             )
                             if iou > self.iou_threshold:
+                                nf+=1
                                 instance_pred[batch_idx][
                                     instance_pred[batch_idx] == pred_inst_id
                                 ] = 0
