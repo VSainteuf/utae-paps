@@ -70,7 +70,6 @@ class PanopticMeter:
                                 / (void_inst_area + pred_inst_area - inter).float()
                             )
                             if iou > self.iou_threshold:
-                                nf+=1
                                 instance_pred[batch_idx][
                                     instance_pred[batch_idx] == pred_inst_id
                                 ] = 0
