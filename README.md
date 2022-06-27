@@ -80,7 +80,7 @@ Pre-trained weights of U-TAE+Paps are available [here](https://zenodo.org/record
 To perform inference of the pre-trained model on the test set of PASTIS run:
 
 ```test
-python test_panoptic.py --dataset_folder PATH_TO_DATASET --weight_folder PATH_TO_WEIGHT_FOLDER
+python test_panoptic.py --dataset_folder PATH_TO_DATASET --weight_folder PATH_TO_WEIGHT_FOLDER --res_dir OUPUT_DIR
 ```
 
 
@@ -92,7 +92,7 @@ Pre-trained weights of U-TAE are available [here](https://zenodo.org/record/5172
 To perform inference of the pre-trained model on the test set of PASTIS run:
 
 ```test
-python test_semantic.py --dataset_folder PATH_TO_DATASET --weight_folder PATH_TO_WEIGHT_FOLDER
+python test_semantic.py --dataset_folder PATH_TO_DATASET --weight_folder PATH_TO_WEIGHT_FOLDER --res_dir OUPUT_DIR
 ```
 
 
