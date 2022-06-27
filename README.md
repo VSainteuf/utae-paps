@@ -9,6 +9,10 @@ This repository is the official implementation of [Panoptic Segmentation of Sate
 
 [![PWC](https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/panoptic-segmentation-of-satellite-image-time/panoptic-segmentation-on-pastis)](https://paperswithcode.com/sota/panoptic-segmentation-on-pastis?p=panoptic-segmentation-of-satellite-image-time)
 
+## Updates
+
+- **27.06.2022 Major Bugfix** :beetle: A bug in the panoptic metrics was driving the Recognition Quality down artificially. The bug is now fixed and the metrics have been updated here and on Arxiv. Across experiments, solving this bug improved PQ by ~2-3pts on PASTIS. See [this issue](https://github.com/VSainteuf/utae-paps/issues/11) for more details. 
+
 ## Contents
 This repository contains the following PyTorch code:
 - [Implementation](https://github.com/VSainteuf/utae-paps/blob/main/src/backbones/utae.py) of **U-TAE** spatio-temporal encoding architecture for satellite image time series
@@ -31,8 +35,8 @@ When replacing U-TAE with a convolutional LSTM the performance drops to 33.4 PQ.
 
 | Model name         | SQ  | RQ | PQ|
 | ------------------ |--- | --- |--- |
-| **U-TAE + PaPs** (ours)      | **81.3**|**49.2** |**40.4**|
-| UConvLSTM+PaPs  | 80.9|   40.8   |  33.4|
+| **U-TAE + PaPs** (ours)      | **81.5**|**53.2** |**43.8**|
+| UConvLSTM+PaPs  | 80.2|   43.9   |  35.6|
 
 ### PASTIS - Semantic segmentation
 Our spatio-temporal encoder U-TAE yields a semantic segmentation score of 63.1 mIoU on PASTIS, achieving an improvement of approximately 5 points compared to the best existing methods that we re-implemented (Unet-3d, Unet+ConvLSTM and Feature Pyramid+Unet).
