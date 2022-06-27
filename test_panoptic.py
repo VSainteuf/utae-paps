@@ -32,6 +32,12 @@ parser.add_argument(
     help="Path to the folder where the results are saved.",
 )
 parser.add_argument(
+    "--res_dir",
+    default="./inference_paps",
+    type=str,
+    help="Path to directory where results are written."
+)
+parser.add_argument(
     "--num_workers", default=8, type=int, help="Number of data loading workers"
 )
 parser.add_argument(
