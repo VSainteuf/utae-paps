@@ -75,11 +75,13 @@ class PASTIS_Dataset(tdata.Dataset):
         self.reference_date = datetime(*map(int, reference_date.split("-")))
         self.cache = cache
         self.mem16 = mem16
-        self.mono_date = (
-            datetime(*map(int, mono_date.split("-")))
-            if isinstance(mono_date, str)
-            else mono_date
-        )
+        self.mono_date = None
+        if mono_date is not None:
+            self.mono_date = (
+                datetime(*map(int, mono_date.split("-")))
+                if "-" in mono_date
+                else int(mono_date)
+            )
         self.memory = {}
         self.memory_dates = {}
         self.class_mapping = (
@@ -103,7 +105,9 @@ class PASTIS_Dataset(tdata.Dataset):
             date_table = pd.DataFrame(
                 index=self.meta_patch.index, columns=self.date_range, dtype=int
             )
-            for pid, date_seq in dates.iteritems():
+            for pid, date_seq in dates.items():
+                if type(date_seq) == str:
+                    date_seq = json.loads(date_seq)
                 d = pd.DataFrame().from_dict(date_seq, orient="index")
                 d = d[0].apply(
                     lambda x: (
@@ -275,13 +279,15 @@ class PASTIS_Dataset(tdata.Dataset):
 
         if self.mono_date is not None:
             if isinstance(self.mono_date, int):
-                data = data[self.mono_date]
-                dates = dates[self.mono_date]
+                data = {s: data[s][self.mono_date].unsqueeze(0) for s in self.sats}
+                dates = {s: dates[s][self.mono_date] for s in self.sats}
             else:
                 mono_delta = (self.mono_date - self.reference_date).days
-                mono_date = (dates - mono_delta).abs().argmin()
-                data = data[mono_date]
-                dates = dates[mono_date]
+                mono_date = {
+                    s: int((dates[s] - mono_delta).abs().argmin()) for s in self.sats
+                }
+                data = {s: data[s][mono_date[s]].unsqueeze(0) for s in self.sats}
+                dates = {s: dates[s][mono_date[s]] for s in self.sats}
 
         if self.mem16:
             data = {k: v.float() for k, v in data.items()}
